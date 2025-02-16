@@ -43,6 +43,11 @@ Open a browser and go to https://localhost:5000.
 #### Search for a word:
 Enter a word in the input field and get its meaning instantly.
 
+#### Run application through docker compose 
+``` bash
+docker compose up -d --build
+```
+
 #### Database Access:
 
 If your app is running inside a Docker container, follow these steps:
