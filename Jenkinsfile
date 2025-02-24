@@ -39,7 +39,8 @@ pipeline
         {
             steps
             {
-                sh "docker run -d -p 5000:5000 --name dicct-app dictionary-app:latest"
+                //sh "docker run -d -p 5000:5000 --name dict-app dictionary-app:latest"
+                sh "docker compose down && docker compose up -d"   
                 echo "Application has deployed succesfully"
             }
         }
