@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Install SQLite CLI tool 
-RUN sudo apt update && sudo apt install -y sqlite3
+RUN apt update && apt install -y sqlite3
 
 # Set the working directory
 WORKDIR /app
