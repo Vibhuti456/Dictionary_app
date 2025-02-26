@@ -1,0 +1,59 @@
+stages:
+  - build
+  - test
+  - push_to_dockerhub
+  - deploy
+
+
+build-job:
+    stage: build
+    script:
+        - docker build -t dictionary-app:latest .
+        - mkdir -p logs
+        - echo "Images has been built successfully" > logs/app.log
+    artifacts:
+        paths:
+            - logs/
+        expire_in: 1 week
+    tags:
+        - dict-runner
+
+test-job:
+    stage: test
+    script:
+        - echo "$((2+2))"
+        - echo "Testing has been done successfully" >> logs/app.log
+    artifacts:
+        paths:
+            - logs/
+        expire_in: 1 week
+    tags:
+        - dict-runner
+
+push_job:
+  stage: push_to_dockerhub
+  script:
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+    - docker image tag dictionary-app:latest $DOCKERHUB_USER/dictionary-app:latest
+    - docker push $DOCKERHUB_USER/dictionary-app:latest
+    - echo "Image has been pushed to dockerhub registry" >> logs/app.log
+  artifacts:
+        paths:
+            - logs/
+        expire_in: 1 week
+  tags:
+    - dict-runner
+
+
+deploy-job:
+    stage: deploy
+    script:
+        #- docker run -d -p 5000:5000 --name dictionary_app dictionary-app:latest
+        - docker compose down && docker compose up -d
+        - echo "Application has been deployed successfully" >> logs/app.log
+    artifacts:
+        paths:
+            - logs/
+        expire_in: 1 week
+    tags:
+        - dict-runner
