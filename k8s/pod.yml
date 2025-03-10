@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: myapp
+  name: dictionary-app
+  namespace: dict-pod
+
+spec:
+  containers: 
+  - name: dict-app
+    image: vibhutijain12/dictionary-app
+    ports: 
+      - containerPort: 5000 
